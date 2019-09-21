@@ -7,7 +7,19 @@ function initCheckBirthday() {
 }
 
 function checkBirthday(birthday) {
-    // код для задачи №1 писать здесь
+    let yearMilliseconds = 31536000000;
+    let today = new Date ();
+    let now = Date.now(today);
+    let birthdayMilliseconds = Number(new Date(birthday));
+    let diff = now - birthdayMilliseconds;
+    let age = math.round(diff/yearMilliseconds);
+    console.log(age);
+
+    if (age <18) {
+        return false
+    } else if (age >= 18) {
+        return true
+    }
 }
 
 function initPrintAnimalSound() {
@@ -21,7 +33,12 @@ function initPrintAnimalSound() {
 }
 
 function getAnimalSound(animal) {
-    // код для задачи №2 писать здесь
+    let sound = animal.sound;
+    if (animal === undefined) {
+        return null
+    } else if (animal !== undefined) {
+        return sound
+    }
 }
 
 function initCalculateStatement() {
@@ -35,5 +52,18 @@ function initCalculateStatement() {
 }
 
 function getAverageMark(marks) {
-    // код для задачи №3 писать здесь
+    let conversionMarks = [];
+    function conversionMarks (marks) {
+        for (let i = 0; i < marks.length; i++) {
+            let mark = parseInt(marks [i]);
+            conversionMarks.push(mark);
+        }
+        return conversionMarks
+    }
+    conversionMarks = conversion(marks);
+    let average = conversionMarks.reduce(function(sum, current)) {
+        return sum + current;
+    }
+    let roundedAverage = math.round(average);
+    return roundedAverage
 }
