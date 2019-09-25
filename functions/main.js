@@ -39,7 +39,24 @@ showSolutionsMessage(7, 20, -3);
 showSolutionsMessage(2, 4, 2)
 
 //задача2
-let data = {
+
+function getAverageScore(data) {
+    let allAverage = 0;
+    let objectLenght = 0;
+    for (let averageMark in data) {
+        let value = data [averageMark];
+        let summa = 0;
+        for (let i = 0; i < value.length; i++) {
+            summa = summa + value[i];
+        } data[averageMark] = summa / value.length;
+        allAverage = allAverage + data [averageMark];
+        objectLenght++
+        data.average = allAverage / objectLenght;
+    }
+    return data
+}
+
+console.log(getAverageScore) {
     algebra: [2, 4, 5, 2, 3, 4],
     geometry:[2, 4, 5],
     russian: [3, 3, 4, 5],
@@ -49,34 +66,8 @@ let data = {
     poetry: [5, 3, 4],
     chemistry: [2],
     french: [4, 4]
-    };
+}));
 
-function getAverageScore (data, scores ) {
-    let total = 0;
-    for (let i = 0; i < data.lenght; i++) {
-        total += data[i];
-    }
-    return total / data.lenght;
-}
-
-for  (let prop in data) {
-    let value = data [prop];
-    scores = data;
-    scores[prop] = getAverageScoreOfLesson(value);
-}
-
-let j = 0;
-let sum = 0;
-
-for (let prop in scores) {
-    sum += scores [prop];
-    j++;
-}
-
-scores.average = (sum / j);
-
-console.log(scores);
-getAverageScore (data);
 
     //задача3
     function getPersonData(secretData){
