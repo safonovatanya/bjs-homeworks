@@ -1,361 +1,267 @@
 //задача1
 class Weapon {
-    constructor (name, attack, durability, startDurability, range) {
-        this.name = name;
-        this.attack = attack;
-        this.durability = durability;
-        this.startDurability = startDurability;
-        this.range = range;
+    constructor(weapon) {
+    this.name = weapon.name;
+    this.attack = weapon.attack;
+    this.durability = weapon.durability;
+    this.initialDurability = this.durability;
+    this.range = weapon.range;
     }
-
+    
     takeDamage(damage) {
-        if (damage > this.startDurability) {
-            this.durability = 0;
-        } else {
-            this.durability = this.startDurability - damage;
-        }
+    let changeDurability = this.durability - damage;
+    if(changeDurability >= 0) {
+    this.durability = changeDurability;
+    } else {
+    this.durability = 0;
     }
-
-    getDamage () {
-        if (this.durability === 0) {
-            return 0
-        } else if (this.durability >= 0.3 * this.startDurability) {
-            return this.attack
-        }else {
-            return (this.attack / 2)
-        }
     }
-
+    
+    getDamage(){
+    let percentIntegrity = this.durability / this.initialDurability;
+    if (percentIntegrity === 0) {
+    return 0;
+    } else if (percentIntegrity < 0.3) {
+    return this.attack / 2;
+    } else {
+    return this.attack;
+    }
+    }
+    
     isBroken() {
-        if (this.durability === 0) {
-            return true
-        } else {
-            return false
-        }
+    return this.durability <= 0;
     }
-
-}
-
-const hand = new Weapon({
+    }
+    
+    const sword = new Weapon({
+    name: 'Старый меч',
+    attack: 20,
+    durability: 10,
+    range: 1
+    });
+    
+    sword.takeDamage(5);
+    console.log(`sword.takeDamage(5) - sword.durability = ${sword.durability}`);
+    
+    sword.takeDamage(50);
+    console.log(`sword.takeDamage(50) - sword.durability = ${sword.durability}`);
+    
+    const arm = new Weapon({
     name: 'Рука',
     attack: 1,
-    startDurability: Infinity,
     durability: Infinity,
     range: 1,
     });
     
+    arm.takeDamage(20);
+    console.log(`arm.takeDamage(20) - arm.durability = ${arm.durability}`);
+    
     const bow = new Weapon({
     name: 'Лук',
     attack: 10,
-    startDurability: 200,
     durability: 200,
     range: 3,
     });
     
-    const sword = new Weapon({
-    name: 'Меч',
-    attack: 25,
-    startDurability: 500,
-    durability: 500,
-    range: 1,
-    });
+    bow.takeDamage(20);
+    console.log(`bow.takeDamage(20) - bow.durability = ${bow.durability}`);
     
-    const knife = new Weapon({
-    name: 'Нож',
-    attack: 5,
-    startDurability: 300,
-    durability: 300,
-    range: 1,
-    });
+    bow.takeDamage(200);
+    console.log(`bow.takeDamage(200) - bow.durability = ${bow.durability}`);
     
-    const staff = new Weapon({
-    name: 'Посох',
-    attack: 8,
-    startDurability: 300,
-    durability: 300,
-    range: 2,
-    });
+    console.log(`bow.getDamage() - ${bow.getDamage()}`);
+    console.log(`bow.isBroken() - ${bow.isBroken()}`);
     
-    const longBow = new Weapon({
-    name: 'Длинный лук',
-    basedWeapon: 'Лук',
-    attack: 15,
-    startDurability: 200,
-    durability: 200,
-    range: 4,
-    });
-    
-    const axe = new Weapon({
-    name: 'Секира',
-    basedWeapon: 'Меч',
-    attack: 27,
-    startDurability: 800,
-    durability: 800,
-    range: 1,
-    });
-    
-    const staffOfStorm = new Weapon({
-    name: 'Посох бури',
-    basedWeapon: 'Посох',
-    attack: 10,
-    startDurability: 300,
-    durability: 300,
-    range: 3,
-    });
-    
-    bow.takeDamage(150);
-    console.log(bow.durability);
-    console.log(bow.getDamage());
-    console.log(bow.isBroken());
-    
-    staffOfStorm.takeDamage(400);
-    console.log(staffOfStorm.durability);
-    console.log(staffOfStorm.getDamage());
-    console.log(staffOfStorm.isBroken());
+    console.log(`arm.durability - ${arm.durability}`); 
+    console.log(`arm.getDamage() - ${arm.getDamage()}`);
+    console.log(`arm.isBroken() - ${arm.isBroken()}`);
 
     //задача2
-
-    class Hand extends Weapon {
+    class Arm extends Weapon {
         constructor() {
-        super({name: 'Рука', attack: 1, startDurability: Infinity, durability: Infinity, range: 1});
+        super({
+        name: 'Рука',
+        attack: 1,
+        durability: Infinity,
+        range: 1
+        });
         }
         }
         
-        const hand = new Hand()
         class Bow extends Weapon {
         constructor() {
-        super({name: 'Лук', attack: 10, startDurability: 200, durability: 200, range: 3});
+        super({
+        name: 'Лук',
+        attack: 10,
+        durability: 200,
+        range: 3
+        });
         }
         }
         
-        const bow = new Bow();
         class Sword extends Weapon {
-        constructor() {
-        super({name: 'Меч', attack: 25, startDurability: 500, durability: 500, range: 1});
+        constructor () {
+        super ({
+        name: 'Меч',
+        attack: 25,
+        durability: 500,
+        range: 1
+        });
         }
         }
         
-        const sword = new Sword();
         class Knife extends Weapon {
         constructor() {
-        super({name: 'Нож', attack: 5, startDurability: 300, durability: 300, range: 1});
+        super({
+        name: 'Нож',
+        attack: 5,
+        durability: 300,
+        range: 1
+        });
         }
         }
         
-        const knife = new Knife();
-        class Staff extends Weapon {
+        class Stick extends Weapon {
         constructor() {
-        super({name: 'Посох', attack: 8, startDurability: 300, durability: 300, range: 2});
+        super({
+        name: 'Посох',
+        attack: 8,
+        durability: 300,
+        range: 2
+        });
         }
         }
         
-        const staff = new Staff();
         class LongBow extends Bow {
-        constructor(basedWeapon) {
+        constructor() {
         super();
         this.name = 'Длинный лук';
-        this.basedWeapon = 'Лук';
         this.attack = 15;
         this.range = 4;
         }
         }
         
-        const longBow = new LongBow();
-        class Axe extends Sword{
-        constructor(basedWeapon) {
+        class Axe extends Sword {
+        constructor() {
         super();
         this.name = 'Секира';
-        this.basedWeapon = 'Меч',
         this.attack = 27;
-        this.startDurability = 800;
         this.durability = 800;
+        this.initialDurability = this.durability;
         }
         }
         
-        const axe = new Axe();
-        class StaffOfStorm extends Staff{
-        constructor(basedWeapon) {
+        class StormStick extends Stick {
+        constructor() {
         super();
-        this.name = 'Посох бури';
-        this.basedWeapon = 'Посох',
+        this.name = 'Посох Бури';
         this.attack = 10;
         this.range = 3;
         }
         }
+        const bowNew = new Bow();
+        const axeNew = new Axe();
+        const longBowNew = new LongBow();
         
-        const staffOfStorm = new StaffOfStorm();
-        
-        bow.takeDamage(150);
-        console.log(bow.durability);
-        console.log(bow.getDamage());
-        console.log(bow.isBroken());
-        
-        staffOfStorm.takeDamage(400);
-        console.log(staffOfStorm.durability);
-        console.log(staffOfStorm.getDamage());
-        console.log(staffOfStorm.isBroken());
-        
-//задача3
-class Hand extends Weapon {
-    constructor() {
-    super({name: 'Рука', attack: 1, startDurability: Infinity, durability: Infinity, range: 1});
-    }
-    }
-    
-    const hand = new Hand()
-    
-    class Bow extends Weapon {
-    constructor() {
-    super({name: 'Лук', attack: 10, startDurability: 200, durability: 200, range: 3});
-    }
-    }
-    
-    const bow = new Bow();
-    
-    class Sword extends Weapon {
-    constructor() {
-    super({name: 'Меч', attack: 25, startDurability: 500, durability: 500, range: 1});
-    }
-    }
-    
-    const sword = new Sword();
-    
-    class Knife extends Weapon {
-    constructor() {
-    super({name: 'Нож', attack: 5, startDurability: 300, durability: 300, range: 1});
-    }
-    }
-    
-    const knife = new Knife();
-    
-    class Staff extends Weapon {
-    constructor() {
-    super({name: 'Посох', attack: 8, startDurability: 300, durability: 300, range: 2});
-    }
-    }
-    
-    const staff = new Staff();
-    
-    class LongBow extends Bow {
-    constructor(basedWeapon) {
-    super();
-    this.name = 'Длинный лук';
-    this.basedWeapon = 'Лук';
-    this.attack = 15;
-    this.range = 4;
-    }
-    }
-    
-    const longBow = new LongBow();
-    
-    class Axe extends Sword{
-    constructor(basedWeapon) {
-    super();
-    this.name = 'Секира';
-    this.basedWeapon = 'Меч',
-    this.attack = 27;
-    this.startDurability = 800;
-    this.durability = 800;
-    }
-    }
-    
-    const axe = new Axe();
-    
-    class StaffOfStorm extends Staff{
-    constructor(basedWeapon) {
-    super();
-    this.name = 'Посох бури';
-    this.basedWeapon = 'Посох',
-    this.attack = 10;
-    this.range = 3;
-    }
-    }
-    
-    const staffOfStorm = new StaffOfStorm();
-    
-    bow.takeDamage(150);
-    console.log(bow.durability);
-    console.log(bow.getDamage());
-    console.log(bow.isBroken());
-    
-    staffOfStorm.takeDamage(400);
-    console.log(staffOfStorm.durability);
-    console.log(staffOfStorm.getDamage());
-    console.log(staffOfStorm.isBroken());
-     
-    class StudentLog {
-    constructor(name) {
-    this.name = name;
-    this.diary = {};
-    }
-    
-    getName() {
-    if (!this.name) {
-    return 'Ошибка! Заполните поле "Имя"!'
-    }else if (this.name) {
-    return this.name
-    }
-    }
-    
-    addGrade(grade, subject) {
-    if (grade < 1 || grade > 5) {
-    return `Вы пытались поставить оценку ${grade} по предмету "${subject}". Допускаются только числа от 1 до 5.`
-    if (this.diary[subject] === undefined) {
-    return 0
-    }else {
-    return this.diary[subject].push()
-    }
-    }
-    
-    if (this.diary[subject] === undefined) {
-    this.diary[subject] = [];
-    return this.diary[subject].push(grade)
-    }else {
-    return this.diary[subject].push(grade)
-    }
-    }
-    
-    getAverageBySubject(subject) {
-    if (this.diary[subject] === undefined) {
-    return 0
-    }else {
-    let averageSubject = this.diary[subject].reduce(function(sum, current) {
-    return sum + current;
-    },0)/this.diary[subject].length;
-    return averageSubject
-    }
-    }
-    
-    getTotalAverage() {
-    if (Object.keys(this.diary).length === 0) {
-    return 0
-    }else {
-    let averageScore = 0;
-    for (let subject in this.diary) {
-    averageScore += this.getAverageBySubject(subject);
-    };
-    return averageScore / Object.keys(this.diary).length;
-    }
-    }
-    }
-    
-    const log = new StudentLog('Олег Никифоров');
-    
-    console.log(log.getName());
-    
-    console.log(log.addGrade(5, 'algebra'));
-    console.log(log.addGrade(4, 'russian'));
-    console.log(log.addGrade(3, 'music'));
-    console.log(log.addGrade(5, 'algebra'));
-    console.log(log.addGrade(4, 'russian'));
-    console.log(log.addGrade(3, 'music'));
-    console.log(log.addGrade(5, 'algebra'));
-    console.log(log.addGrade(4, 'russian'));
-    console.log(log.addGrade(3, 'music'));
-    
-    console.log(log.getAverageBySubject('algebra'))
-    console.log(log.getAverageBySubject('russian'))
-    console.log(log.getAverageBySubject('music'))
-    
-    console.log(log.getTotalAverage())
-    
+        console.log('const bow = new Bow();');
+        console.log(`Class Bow - name = ${bowNew.name}`); //
+        console.log(`Class Bow - attack = ${bowNew.attack}`);
+        console.log(`Class Bow - durability = ${bowNew.durability}`);
+        console.log(`Class Bow - range = ${bowNew.range}`);
+
+        //задача3
+        class StudentLog {
+            constructor(name) {
+            this.name = name;
+            this.subject = {};
+            }
+            
+            getName() {
+            return this.name;
+            }
+            
+            findSubject(subject) {
+            for (let itemSubject in this.subject) {
+            if (itemSubject == subject) {
+            return true;
+            break;
+            }
+            }
+            return false;
+            }
+            
+            addGrade(grade, subject) {
+            if (!this.findSubject(subject)) {
+            this.subject[subject] = [];
+            }
+            
+            if (grade > 0 && grade < 6 && !isNaN(Number(grade))){
+            this.subject[subject].push(grade);
+            } else {
+            console.log(`Вы пытались поставить оценку ${grade} по предмету ${subject}. Допускаются только числа от 1 до 5.`)
+            }
+            
+            return this.subject[subject].length;
+            }
+            
+            getAverageBySubject(subject) {
+            if (this.subject[subject].length === 0 || !this.findSubject(subject)) {
+            return 0;
+            }
+            
+            let sum = 0;
+            
+            for (let items of this.subject[subject]) {
+            sum += items;
+            }
+            return sum / this.subject[subject].length;
+            }
+            
+            getTotalAverage() {
+            let sumSubjcectAverege = 0;
+            let amountSubject = 0
+            let itemAverege;
+            let averegeAll;
+            
+            for (let itemSubject in this.subject) {
+            itemAverege = this.getAverageBySubject(itemSubject);
+            if (itemAverege != 0) {
+            sumSubjcectAverege += this.getAverageBySubject(itemSubject);
+            amountSubject++;
+            }
+            }
+            
+            averegeAll = sumSubjcectAverege / amountSubject;
+            
+            return isNaN(averegeAll) ? 0: averegeAll;
+            }
+            }
+            
+            const log = new StudentLog('Олег Никифоров');
+            
+            console.log(log.getName());
+            
+            console.log(`Средняя оценка по всем предметам, оценок нет - ${log.getTotalAverage()}`);
+            
+            console.log(`log.addGrade(2, 'algebra')`);
+            console.log(log.addGrade(2, 'algebra'));
+            
+            console.log(`log.addGrade('отлично!', 'math')`);
+            console.log(log.addGrade('отлично!', 'math'));
+            
+            console.log(`log.addGrade(4, 'algebra')`);
+            console.log(log.addGrade(4, 'algebra'));
+            
+            console.log(`log.addGrade(5, 'geometry')`);
+            console.log(log.addGrade(5, 'geometry'));
+            
+            console.log(`log.addGrade(25, 'geometry')`);
+            console.log(log.addGrade(25, 'geometry'));
+            
+            log.addGrade(4, 'geometry');
+            
+            console.log(`Средняя оцена geometry - ${log.getAverageBySubject('geometry')}`);
+            console.log(`Средняя оцена algebra - ${log.getAverageBySubject('algebra')}`);
+            console.log(`Средняя оцена math - ${log.getAverageBySubject('math')}`);
+            
+            console.log(`Средняя оцена по всем предметам - ${log.getTotalAverage()}`);
