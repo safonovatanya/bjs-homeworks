@@ -1,35 +1,36 @@
 'use strict';
 
 function compareArrays(arr1, arr2) {
-	if (arr1.length === arr2.length) {
-		return arr1.every((element, index) => {
-			return element === arr2[index]; 
-		});
-	}
+	return arr1.length !== arr2.length ? false : arr1.everyevery((element, index) => element === arr2[index]);
 }
 
 function memoize(fn, limit) {
-	const results = [];
-	return (a, b) => {
-		let result = results.find( (memory) => compareArrays(memory.args, [a, b]) );
 
-		if (result) {
-			console.log('результат берётся из памяти');
-			return result;
-		} else {
-			result = fn(a, b);
-			results.push({args: [a, b], result: result});
-		}
-
-		if (results.length >= limit) {
-			results.shift();
-		}
-
-		console.log('результат берётся не из памяти');
-		return result;
+	let results = [];
+	console.log('Функция вызвана из памяти');
+	
+	return function () {
+	for (let i = 0; i < results.length; i++) {
+	
+	let args = results[i].args;
+	
+	if (compareArrays(args, arguments)) {
+	return args;
 	}
-
-}
+	}
+	
+	results = results.slice(0, limit);
+	
+	results.unshift({
+	args: [...arguments],
+	result: fn(...arguments)
+	});
+	
+	return fn(...arguments);
+	
+	};
+	
+	}
 
 const sum = (a, b) => a + b;
 const mSum = memoize(sum, 10);
