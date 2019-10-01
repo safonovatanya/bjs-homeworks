@@ -21,7 +21,6 @@ function compareArrays(arr1, arr2) {
 		console.log(`Результат из памяти:`);
 		return check.result;
 		}
-		
 		results.push({ args: Array.from(arguments), result: fn(...arguments) })
 		
 		if (results.length > limit) {
