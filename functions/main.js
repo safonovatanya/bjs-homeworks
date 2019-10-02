@@ -57,14 +57,14 @@ function getAverageScore(data) {
     return data
 }
 
-console.log(getAverageScore) {
+console.log(getAverageScore({
   algebra: [3, 4],
   geometry: [4, 5],
   physics: [5, 5],
   poetry: [3, 2],
   music: [5, 3],
   history: [2, 4, 5, 3, 3, 3]
-}
+}))
 
 
     //задача3
